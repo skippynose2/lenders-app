@@ -61,6 +61,32 @@ Notes: The id in the URI is the id of the house. Look on figma on how to
 display all the information.
 
 
+Request 3:
+URI: /investments/{id}
+Body:
+{
+    "user_id" : 1,
+    "money_invested_all_time" : 1500000,
+    "money_invested_this_month" : 5000,
+    "interest_earned_all_time": 405,
+    "interest_earned_this_month": 25,
+    "money_invested_month_stamp" : [
+        "YYYY-MM-DD" : (some value here),
+                .
+                .
+                .
+    ]
+
+    "interest_earned_month_stamp" : [
+        "YYYY-MM-DD": (some value here),
+                .
+                .
+                .
+    ]
+}
+
+Notes: The time stamps will be used to generate the graphs seen on the front end
+
 House Model:
     Attributes:
         1. House Id
@@ -79,6 +105,16 @@ House Model:
             - Money Raised
             - Tags
 
+User Model:
+    Attributes:
+        1. User id
+        2. First Name
+        3. Last Name
+        4. SSN
+
+    Methods:
+        1. Need to have both setter and getter methods to modify all
+        the above listed attributes of the user model
 
 
 POST Requests:
