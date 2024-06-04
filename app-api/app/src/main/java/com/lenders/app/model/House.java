@@ -16,7 +16,7 @@ public class House {
 
     static final String STRING_FORMAT = """
     House: [id=%d, address=%s, zipcode=%d, city=%s,
-    property_value=%.2f, money_raised=%.2f, asking_price=%.2f, tags=%s
+    property_value=%.2f, money_raised=%.2f, asking_price=%.2f, tags=%s]
     """;
 
     @JsonProperty("id") private int id;
