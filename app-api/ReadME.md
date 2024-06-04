@@ -16,6 +16,7 @@ Body:
         "addy_city": "ROCHESTER",
         "money_raised": 50000,
         "target_money": 100000,
+        "property_value": 200000
         "tags": [
             "Under Contract",
             "Fair Condition"
@@ -28,6 +29,7 @@ Body:
         "addy_city": "Lexington",
         "money_raised": 50000,
         "target_money": 100000,
+        "property_value": 150000,
         "tags": [
             "Under Contract",
             "Fair Condition"
@@ -48,6 +50,7 @@ Body:
     "addy_city": "ROCHESTER",
     "money_raised": 50000,
     "target_money": 100000,
+    "propert_value": 150000,
     "tags": [
         "Under Contract",
         "Fair Condition"
@@ -57,6 +60,24 @@ Body:
 Notes: The id in the URI is the id of the house. Look on figma on how to
 display all the information.
 
+
+House Model:
+    Attributes:
+        1. House Id
+        2. Street Addy
+        3. House Zipcode
+        4. City
+        5. Property Value
+        6. Money Raised
+        7. Loan asking price
+        8. Tags
+            - Possibly an array of strings for each tag, or enums?
+
+    Methods:
+        1. You need methods to get all the attributes
+        2. You need methods to update the following information
+            - Money Raised
+            - Tags
 
 
 
