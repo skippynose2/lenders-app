@@ -170,4 +170,14 @@ public class House {
     public void setAskingPrice(float asking_price) {
         this.asking_price = asking_price;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return String.format(STRING_FORMAT, id, address, zipcode, city,
+                property_value, money_raised, asking_price, tags);
+    }
+
 }

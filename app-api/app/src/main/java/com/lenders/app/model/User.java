@@ -94,4 +94,13 @@ public class User {
     public void setSsn(String ssn) {
         this.ssn = ssn;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return String.format(STRING_FORMAT, id, first_name, last_name, ssn);
+    }
+
 }

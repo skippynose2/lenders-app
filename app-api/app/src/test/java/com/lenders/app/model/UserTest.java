@@ -66,4 +66,15 @@ public class UserTest {
 
         assertEquals(new_ssn, testUser.getSsn());
     }
+
+    @Test
+    public void testToString() {
+        String expected_string = String.format(User.STRING_FORMAT,
+                testUser.getId(), testUser.getFirstName(),
+                testUser.getLastName(), testUser.getSsn());
+
+        String actual_string = testUser.toString();
+
+        assertEquals(expected_string, actual_string);
+    }
 }
