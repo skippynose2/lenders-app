@@ -17,6 +17,8 @@ public class User {
     """;
 
     @JsonProperty("id") private int id;
+    @JsonProperty("username") private String username;
+    @JsonProperty("password") private String password;
     @JsonProperty("first_name") private String first_name;
     @JsonProperty("last_name") private String last_name;
     @JsonProperty("ssn") private String ssn;
@@ -30,10 +32,14 @@ public class User {
      * @param ssn the SSN of the user
      */
     public User(@JsonProperty("id") int id,
+                @JsonProperty("username") String username,
+                @JsonProperty("password") String password,
                 @JsonProperty("first_name") String first_name,
                 @JsonProperty("last_name") String last_name,
                 @JsonProperty("ssn") String ssn) {
         this.id = id;
+        this.username = username;
+        this.password = password;
         this.first_name = first_name;
         this.last_name = last_name;
         this.ssn = ssn;
@@ -45,6 +51,22 @@ public class User {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Get the user's username
+     * @return the user's username
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    /**
+     * Get the user's password
+     * @return the user's password
+     */
+    public String getPassword() {
+        return password;
     }
 
     /**
@@ -69,6 +91,22 @@ public class User {
      */
     public String getSsn() {
         return ssn;
+    }
+
+    /**
+     * Update the user's username
+     * @param username the new username for the user
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * Update the user's password
+     * @param password the new password for the user
+     */
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     /**

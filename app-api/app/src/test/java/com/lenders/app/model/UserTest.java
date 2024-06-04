@@ -21,7 +21,7 @@ public class UserTest {
 
     @BeforeEach
     public void userSetUp() {
-        testUser = new User(1000, "Hello", "World", "000-00-0000");
+        testUser = new User(1000, "username", "1234", "Hello", "World", "000-00-0000");
     }
 
 
@@ -29,18 +29,39 @@ public class UserTest {
     public void testNewUser() {
         // Expected values
         int id = 1001;
+        String username = "username";
+        String password = "pass";
         String fn = "World";
         String ln = "Hello";
         String ssn = "123-45-6789";
 
-        User u = new User(id, fn, ln, ssn);
+        User u = new User(id, username, password, fn, ln, ssn);
 
         assertEquals(id, u.getId());
+        assertEquals(username, u.getUsername());
+        assertEquals(password, u.getPassword());
         assertEquals(fn, u.getFirstName());
         assertEquals(ln, u.getLastName());
         assertEquals(ssn, u.getSsn());
     }
 
+    @Test
+    public void testNewUsername() {
+        String new_username = "myusername";
+
+        testUser.setUsername(new_username);
+
+        assertEquals(new_username, testUser.getUsername());
+    }
+
+    @Test
+    public void testNewPassword() {
+        String new_pass = "023124";
+
+        testUser.setPassword(new_pass);
+
+        assertEquals(new_pass, testUser.getPassword());
+    }
 
     @Test
     public void testNewFirstName() {
