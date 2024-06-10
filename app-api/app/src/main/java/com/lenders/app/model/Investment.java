@@ -15,10 +15,13 @@ public class Investment {
     private static final Logger LOG = Logger.getLogger(Investment.class.getName());
 
     static final String STRING_FORMAT = """
-            Investment: [id=%d, house=%s, money_invested=%.2f]
+            Investment: [id=%d, user_id=%d house=%s, money_invested=%.2f]
             """;
 
     @JsonProperty("id") private int id;
+    @JsonProperty("user_id") private int user_id;
+
+    @JsonProperty("date") private String date;
     @JsonProperty("house") private House house;
     @JsonProperty("money_invested") private float money_invested;
 
@@ -29,9 +32,13 @@ public class Investment {
      * @param money_invested the amount of money invested in the house
      */
     public Investment(@JsonProperty("id") int id,
+                      @JsonProperty("user_id") int user_id,
+                      @JsonProperty("date") String date,
                       @JsonProperty("house") House house,
                       @JsonProperty("money_invested") float money_invested) {
         this.id = id;
+        this.user_id = user_id;
+        this.date = date;
         this.house = house;
         this.money_invested = money_invested;
     }
@@ -42,6 +49,22 @@ public class Investment {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Get the user id associated with the investment
+     * @return the user id
+     */
+    public int getUserId() {
+        return user_id;
+    }
+
+    /**
+     * Get the date of the transaction
+     * @return the date of the transaction
+     */
+    public String getDate() {
+        return date;
     }
 
     /**
@@ -61,6 +84,22 @@ public class Investment {
     }
 
     /**
+     * Set the user id of the investment
+     * @param user_id the user id of the investment
+     */
+    public void setUserId(int user_id) {
+        this.user_id = user_id;
+    }
+
+    /**
+     * Set the date the investment took place
+     * @param date the date of the investment
+     */
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    /**
      * Set the house being invested to
      * @param house the updated house to be invested in
      */
@@ -74,5 +113,14 @@ public class Investment {
      */
     public void setMoneyInvested(float money_invested) {
         this.money_invested = money_invested;
+    }
+
+    /**
+     * Return if a specific order is associated with a user
+     * @param user_id the specific user to check for
+     * @return true if user id's match, false otherwise
+     */
+    public boolean isPurchasedBy(int user_id) {
+        return user_id == this.user_id;
     }
 }
