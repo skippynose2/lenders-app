@@ -97,8 +97,11 @@ public class HouseFileDAO implements HouseDAO{
     public House createHouse(House h) throws IOException {
         synchronized (houses) {
             House newH = new House(getNextId(), h.getAddress(), h.getZipcode(),
-                    h.getCity(), h.getPropertyValue(), h.getMoneyRaised(),
-                    h.getAskingPrice(), h.getTags());
+                    h.getCity(), h.getSqft(), h.isClosed_on(), h.getClosing_date(),
+                    h.getLoan_amount(), h.getLtv_percent(), h.getRehab_cost(),
+                    h.getRehab_loan(), h.getRehab_overview(), h.getTurn_around_date(),
+                    h.getGross_rent_estimate(), h.getCondition(), h.getExit_strategy(),
+                    h.getInterest());
             houses.put(newH.getId(), newH);
             save();
             return newH;
