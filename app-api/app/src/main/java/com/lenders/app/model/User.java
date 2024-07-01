@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  * @author Matthew Morrison
  */
 public class User {
-    private static final Logger LOG = Logger.getLogger(House.class.getName());
+    private static final Logger LOG = Logger.getLogger(User.class.getName());
 
     static final String STRING_FORMAT = """
         User: [id=%d, first_name=%s, last_name=%s, ssn=%s, 
@@ -25,7 +25,7 @@ public class User {
     @JsonProperty("email") private String email;
     @JsonProperty("phone_number") private String phone_number;
     @JsonProperty("business_name") private String business_name;
-
+    // TODO storing documents (personal financial statements)
     
     /**
      * Create a new User Entity with the required JSON Properties
@@ -38,8 +38,14 @@ public class User {
      * @param phone_number phone number of the user
      * @param business_name business name/EIN/TIN, if applicable 
      */
-    public User(int id, String password, String first_name, String last_name, String ssn, String email,
-            String phone_number, String business_name) {
+    public User(@JsonProperty("id") int id, 
+                @JsonProperty("password") String password, 
+                @JsonProperty("first_name") String first_name, 
+                @JsonProperty("last_name") String last_name, 
+                @JsonProperty("ssn") String ssn, 
+                @JsonProperty("email") String email,
+                @JsonProperty("phone_number") String phone_number, 
+                @JsonProperty("business_name") String business_name) {
         this.id = id;
         this.password = password;
         this.first_name = first_name;
