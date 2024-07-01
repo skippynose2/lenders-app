@@ -16,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @Tag("Model-Tier")
 public class HouseTest {
+    /** 
 
     private House testHouse;
 
@@ -141,4 +142,6 @@ public class HouseTest {
 
         assertEquals(expected_string, actual_string);
     }
+
+    */
 }

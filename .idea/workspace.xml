@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ffd75376-d988-4b35-805c-84a94ffe8557" name="Changes" comment="Initial creation of InvestmentDAO methods and stubbed out InvestmentFileDAO class">
+      <change beforePath="$PROJECT_DIR$/app-api/app/src/main/java/com/lenders/app/persistence/InvestmentDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-api/app/src/main/java/com/lenders/app/persistence/InvestmentDAO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app-api/app/src/main/java/com/lenders/app/persistence/InvestmentFileDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/app-api/app/src/main/java/com/lenders/app/persistence/InvestmentFileDAO.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectId" id="2hQ1pEYK7Kpra7GHucMN9AYxMVz" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/msmch/IdeaProjects&quot;
+  }
+}</component>
+  <component name="RunManager" selected="JUnit.HouseTest.testDeleteTagDNE">
+    <configuration name="HouseTest.testDeleteTagDNE" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lenders.app.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.lenders.app.model" />
+      <option name="MAIN_CLASS_NAME" value="com.lenders.app.model.HouseTest" />
+      <option name="METHOD_NAME" value="testDeleteTagDNE" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HouseTest.testSetMoneyRaised" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lenders.app.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.lenders.app.model" />
+      <option name="MAIN_CLASS_NAME" value="com.lenders.app.model.HouseTest" />
+      <option name="METHOD_NAME" value="testSetMoneyRaised" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="HouseTest.testToString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lenders.app.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.lenders.app.model" />
+      <option name="MAIN_CLASS_NAME" value="com.lenders.app.model.HouseTest" />
+      <option name="METHOD_NAME" value="testToString" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lenders.app.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.lenders.app.model" />
+      <option name="MAIN_CLASS_NAME" value="com.lenders.app.model.UserTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="UserTest.testToString" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="app" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.lenders.app.model.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.lenders.app.model" />
+      <option name="MAIN_CLASS_NAME" value="com.lenders.app.model.UserTest" />
+      <option name="METHOD_NAME" value="testToString" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.UserTest" />
+        <item itemvalue="JUnit.UserTest.testToString" />
+        <item itemvalue="JUnit.HouseTest.testToString" />
+        <item itemvalue="JUnit.HouseTest.testSetMoneyRaised" />
+        <item itemvalue="JUnit.HouseTest.testDeleteTagDNE" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ffd75376-d988-4b35-805c-84a94ffe8557" name="Changes" comment="" />
+      <created>1717511671109</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1717511671109</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Implementation of User Class">
+      <created>1717511723029</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1717511723030</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Test cases written for User class">
+      <created>1717512532453</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1717512532453</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Implemented User model tests, added toString methods to House and User and tested successfully">
+      <created>1717514037828</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1717514037828</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Implement UserDAO interface and stub out classes in UserFileDAO">
+      <created>1717681735353</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1717681735353</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Implementation of UserDAO classes in UserFileDAO">
+      <created>1717683763119</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1717683763119</updated>
+    </task>
+    <task id="LOCAL-00006" summary="implement most of HouseDAO (search methods TBD) and stub out HouseFileDAO">
+      <created>1717685149164</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1717685149164</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Implementation of all classes from HouseDAO into HouseFileDAO">
+      <created>1717686203306</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1717686203306</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Creation of investment model to represent a user's nvestment to a property">
+      <created>1717689661284</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1717689661284</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Update investment model to hold user id and date of investment">
+      <created>1718025881256</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1718025881256</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Initial creation of InvestmentDAO methods and stubbed out InvestmentFileDAO class">
+      <created>1718026890024</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1718026890024</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Implementation of User Class" />
+    <MESSAGE value="Test cases written for User class" />
+    <MESSAGE value="Implemented User model tests, added toString methods to House and User and tested successfully" />
+    <MESSAGE value="Implement UserDAO interface and stub out classes in UserFileDAO" />
+    <MESSAGE value="Implementation of UserDAO classes in UserFileDAO" />
+    <MESSAGE value="implement most of HouseDAO (search methods TBD) and stub out HouseFileDAO" />
+    <MESSAGE value="Implementation of all classes from HouseDAO into HouseFileDAO" />
+    <MESSAGE value="Creation of investment model to represent a user's nvestment to a property" />
+    <MESSAGE value="Update investment model to hold user id and date of investment" />
+    <MESSAGE value="Initial creation of InvestmentDAO methods and stubbed out InvestmentFileDAO class" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial creation of InvestmentDAO methods and stubbed out InvestmentFileDAO class" />
+  </component>
+</project>
