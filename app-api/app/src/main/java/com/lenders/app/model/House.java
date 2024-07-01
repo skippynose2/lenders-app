@@ -2,8 +2,8 @@ package com.lenders.app.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.util.ArrayList;
 import java.util.logging.Logger;
+import java.time.LocalDate;
 
 /**
  * Represents a House Entity within the lenders application
@@ -15,160 +15,229 @@ public class House {
     private static final Logger LOG = Logger.getLogger(House.class.getName());
 
     static final String STRING_FORMAT = """
-    House: [id=%d, address=%s, zipcode=%d, city=%s,
-    property_value=%.2f, money_raised=%.2f, asking_price=%.2f, tags=%s]
-    """;
+        House: [id=%d, address=%s, zipcode=%d, city=%s, sqft=%d,
+        closed_on=%b, closing_date=%s, loan_amount=%.2f, ltv_percent=%.2f,
+        rehab_cost=%.2f, rehab_loan=%.2f, rehab_overview=%s, turn_around_date=%s,
+        gross_rent_estimate=%.2f, condition=%s, exit_strategy=%s, interest=%.2f]
+        """;
+
+    public enum ExitStrategy {
+        FIX_AND_RENT,
+        FIX_AND_SELL
+    }
+
+    public enum Condition {
+        POOR,
+        FAIR,
+        GOOD
+    }
 
     @JsonProperty("id") private int id;
     @JsonProperty("address") private String address;
     @JsonProperty("zipcode") private int zipcode;
     @JsonProperty("city") private String city;
-    @JsonProperty("property_value") private float property_value;
-    @JsonProperty("money_raised") private float money_raised;
-    @JsonProperty("asking_price") private float asking_price;
-    @JsonProperty("tags") private ArrayList<String> tags;
-
+    @JsonProperty("sqft") private int sqft;
+    @JsonProperty("closed_on") private boolean closed_on;
+    @JsonProperty("closing_date") private LocalDate closing_date;
+    @JsonProperty("loan_amount") private float loan_amount;
+    @JsonProperty("ltv_percent") private float ltv_percent; // loan to value in percentage
+    @JsonProperty("rehab_cost") private float rehab_cost;
+    @JsonProperty("rehab_loan") private float rehab_loan;
+    @JsonProperty("rehad_overview") private String rehab_overview;
+    @JsonProperty("turn_around_date") private LocalDate turn_around_date;
+    @JsonProperty("gross_rent_estimate") private float gross_rent_estimate;
+    @JsonProperty("condition") private Condition condition;
+    @JsonProperty("exit_strategy") private ExitStrategy exit_strategy;
+    @JsonProperty("interest") private float interest;
 
     /**
      * Create a new House Entity with the required JSON properties
-     * @param id the id of the house
-     * @param address the address of the house
-     * @param zipcode the zipcode of the house
-     * @param city the city the house resides in
-     * @param property_value the current property value of the house
-     * @param money_raised the amount of money raised for the house
-     * @param asking_price the current asking price for the house
-     * @param tags any tags associated with the house
+     * @param id id of house
+     * @param address address of house
+     * @param zipcode zipcode of house
+     * @param city city where house is located
+     * @param sqft square footage of house
+     * @param closed_on is house closed on
+     * @param closing_date closing date of house (null if N/A)
+     * @param loan_amount requested loan amount
+     * @param ltv_percent loan to value in percentage
+     * @param rehab_cost rehad cost of house
+     * @param rehab_loan rehab loan requested
+     * @param rehab_overview overview of rehab needs of property
+     * @param turn_around_date turn around date for house
+     * @param gross_rent_estimate gross rent estimate monthly
+     * @param condition condition of house
+     * @param exit_strategy exit strategy of the hosue
      */
     public House(@JsonProperty("id") int id,
                  @JsonProperty("address") String address,
                  @JsonProperty("zipcode") int zipcode,
                  @JsonProperty("city") String city,
-                 @JsonProperty("property_value") float property_value,
-                 @JsonProperty("money_raised") float money_raised,
-                 @JsonProperty("asking_price") float asking_price,
-                 @JsonProperty("tags") ArrayList<String> tags) {
+                 @JsonProperty("sqft") int sqft,
+                 @JsonProperty("closed_on") boolean closed_on,
+                 @JsonProperty("closing_date") LocalDate closing_date,
+                 @JsonProperty("loan_amount") float loan_amount,
+                 @JsonProperty("ltv_percent") float ltv_percent,
+                 @JsonProperty("rehab_cost") float rehab_cost,
+                 @JsonProperty("rehab_loan") float rehab_loan,
+                 @JsonProperty("rehad_overview") String rehab_overview,
+                 @JsonProperty("turn_around_date") LocalDate turn_around_date,
+                 @JsonProperty("gross_rent_estimate") float gross_rent_estimate,
+                 @JsonProperty("condition") Condition condition,
+                 @JsonProperty("exit_strategy") ExitStrategy exit_strategy,
+                 @JsonProperty("interest") float interest) {
         this.id = id;
         this.address = address;
         this.zipcode = zipcode;
         this.city = city;
-        this.property_value = property_value;
-        this.money_raised = money_raised;
-        this.asking_price = asking_price;
-        this.tags = tags;
+        this.sqft = sqft;
+        this.closed_on = closed_on;
+        this.closing_date = closing_date;
+        this.loan_amount = loan_amount;
+        this.ltv_percent = ltv_percent;
+        this.rehab_cost = rehab_cost;
+        this.rehab_loan = rehab_loan;
+        this.rehab_overview = rehab_overview;
+        this.turn_around_date = turn_around_date;
+        this.gross_rent_estimate = gross_rent_estimate;
+        this.condition = condition;
+        this.exit_strategy = exit_strategy;
+        this.interest = interest;
     }
 
-    /**
-     * Get the house entity's id
-     * @return the house entity's id value
-     */
+    //Getters
+
     public int getId() {
         return this.id;
     }
 
-    /**
-     * Get the house entity's address
-     * @return the house entity's street address
-     */
     public String getAddress() {
         return this.address;
     }
 
-    /**
-     * Get the house entity's zipcode
-     * @return the house entity's zipcode
-     */
     public int getZipcode() {
         return this.zipcode;
     }
 
-    /**
-     * Get the house entity's city
-     * @return the house entity's city
-     */
     public String getCity() {
         return this.city;
     }
 
-    /**
-     * Get the house entity's current property value
-     * @return the house entity's property value
-     */
-    public float getPropertyValue() {
-        return this.property_value;
+    public int getSqft() {
+        return sqft;
     }
 
-    /**
-     * Get the current amount raised for the house entity
-     * @return the house entity's money raised
-     */
-    public float getMoneyRaised() {
-        return this.money_raised;
+    public boolean isClosed_on() {
+        return closed_on;
     }
 
-    /**
-     * Get the asking price for the house entity
-     * @return the house entity's asking price
-     */
-    public float getAskingPrice() {
-        return this.asking_price;
+    public LocalDate getClosing_date() {
+        return closing_date;
     }
 
-    /**
-     * Get all the tags associated with the house entity
-     * @return the house entity's tags
-     */
-    public ArrayList<String> getTags() {
-        return this.tags;
+    public float getLoan_amount() {
+        return loan_amount;
     }
 
-    /**
-     * Update the house entity's tags to add a new one
-     * @param tag the tag to add
-     * @return True if operation was successful and false if otherwise
-     */
-    public boolean addNewTag(String tag) {
-        tag = tag.toLowerCase();
-        if (!this.tags.contains(tag)) {
-            this.tags.add(tag);
-            return true;
-        }
-
-        return false;
-
+    public float getLtv_percent() {
+        return ltv_percent;
     }
 
-    /**
-     * Attempt to delete a tag from the house entity, whether or not it exists
-     * @param tag the tag to delete
-     */
-    public void deleteTag(String tag) {
-        tag = tag.toLowerCase();
-        this.tags.remove(tag);
+    public float getRehab_cost() {
+        return rehab_cost;
     }
 
-    /**
-     * Set the money_raised to a new value
-     * @param money_raised the value to update the money raised to
-     */
-    public void setMoneyRaised(float money_raised) {
-        this.money_raised = money_raised;
+    public float getRehab_loan() {
+        return rehab_loan;
     }
 
-    /**
-     * Set the property value to a new value
-     * @param property_value the updated property value
-     */
-    public void setPropertyValue(float property_value) {
-        this.property_value = property_value;
+    public String getRehab_overview() {
+        return rehab_overview;
     }
 
-    /**
-     * Set the asking price of the house to a new value
-     * @param asking_price the value to update the asking price to
-     */
-    public void setAskingPrice(float asking_price) {
-        this.asking_price = asking_price;
+    public LocalDate getTurn_around_date() {
+        return turn_around_date;
+    }
+
+    public float getGross_rent_estimate() {
+        return gross_rent_estimate;
+    }
+
+    public Condition getCondition() {
+        return condition;
+    }
+
+    public ExitStrategy getExit_strategy() {
+        return exit_strategy;
+    }
+
+    public float getInterest() {
+        return interest;
+    }
+
+    // Setters
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setZipcode(int zipcode) {
+        this.zipcode = zipcode;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setSqft(int sqft) {
+        this.sqft = sqft;
+    }
+
+    public void setClosed_on(boolean closed_on) {
+        this.closed_on = closed_on;
+    }
+
+    public void setClosing_date(LocalDate closing_date) {
+        this.closing_date = closing_date;
+    }
+
+    public void setLoan_amount(float loan_amount) {
+        this.loan_amount = loan_amount;
+    }
+
+    public void setLtv_percent(float ltv_percent) {
+        this.ltv_percent = ltv_percent;
+    }
+
+    public void setRehab_cost(float rehab_cost) {
+        this.rehab_cost = rehab_cost;
+    }
+
+    public void setRehab_loan(float rehab_loan) {
+        this.rehab_loan = rehab_loan;
+    }
+
+    public void setRehab_overview(String rehab_overview) {
+        this.rehab_overview = rehab_overview;
+    }
+
+    public void setTurn_around_date(LocalDate turn_around_date) {
+        this.turn_around_date = turn_around_date;
+    }
+
+    public void setGross_rent_estimate(float gross_rent_estimate) {
+        this.gross_rent_estimate = gross_rent_estimate;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
+    }
+
+    public void setExit_strategy(ExitStrategy exit_strategy) {
+        this.exit_strategy = exit_strategy;
+    }
+    
+    public void setInterest(float interest) {
+        this.interest = interest;
     }
 
     /**
@@ -176,8 +245,9 @@ public class House {
      */
     @Override
     public String toString() {
-        return String.format(STRING_FORMAT, id, address, zipcode, city,
-                property_value, money_raised, asking_price, tags);
+        return String.format(STRING_FORMAT, id, address, zipcode, city, sqft,
+        closed_on, closing_date, loan_amount, ltv_percent, rehab_cost, rehab_loan,
+        rehab_overview, turn_around_date, gross_rent_estimate, condition, exit_strategy);
     }
 
 }
