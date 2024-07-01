@@ -13,7 +13,7 @@ import java.io.IOException;
 public interface InvestmentDAO {
 
     /**
-     * Create and savea {@linkplain Investment Investment} to the system
+     * Create and save an {@linkplain Investment Investment} to the system
      * @param userId the user id associated with the investment
      * @param date the date of the investment
      * @param house the house associated with the investment
