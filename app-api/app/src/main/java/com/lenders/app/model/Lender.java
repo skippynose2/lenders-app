@@ -31,7 +31,7 @@ public class Lender extends User{
      * @param email email of the user
      * @param phone_number phone number of the user
      * @param business_name business name/EIN/TIN, if applicable 
-     * @param funds_available
+     * @param funds_available funds lender has available
      */
     public Lender(@JsonProperty("id") int id, 
                 @JsonProperty("password") String password, 
