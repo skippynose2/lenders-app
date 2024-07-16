@@ -295,6 +295,19 @@ public class HouseFileDAO implements HouseDAO{
     }
 
     /**
+     * Get a single {@linkplain House house} application using its id
+     * @param id the id of the house appliation to fine
+     * @return the {@linkplain House house} application of the respective id
+     * @throws IOException if there is an issue with underlying storage
+     */
+    @Override
+    public House getAppl(int id) throws IOException{
+        synchronized (houseApplications) {
+            return houseApplications.getOrDefault(id, null);
+        }
+    }
+
+    /**
      * Update and save a {@linkplain House house}
      * @param house updated house object to update in the system
      * @return the updated house object if successful, null if the house is not found

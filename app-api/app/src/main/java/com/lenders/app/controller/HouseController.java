@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.lenders.app.model.House;
@@ -47,9 +48,16 @@ public class HouseController {
     
     }
 
-    @GetMapping("/getById/{id}")
+    @GetMapping("/allApplications")
+    public ResponseEntity<House[]> getAllApps() throws IOException {
+        LOG.info("GET /allApplications");
+        House[] houses = houseDAO.getApplHouses();
+        return new ResponseEntity<>(houses, HttpStatus.OK);
+    }
+
+    @GetMapping("/getHouse/{id}")
     public ResponseEntity<House> getHouse(@PathVariable int id) {
-        LOG.info("GET /getById/" + id);
+        LOG.info("GET /getHouse/" + id);
 
         try {
             House h = houseDAO.getHouse(id);
@@ -66,15 +74,31 @@ public class HouseController {
         }
     }
 
-    // TODO search feature for houses, learn how to
-    
+    @GetMapping("/getAppl/{id}")
+    public ResponseEntity<House> getAppl(@PathVariable int id) {
+        LOG.info("GET /getAppl/" + id);
+
+        try {
+            House h = houseDAO.getAppl(id);
+            if (h != null){
+                return new ResponseEntity<>(h, HttpStatus.OK);
+            }
+            else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+        catch(IOException e) {
+            LOG.log(Level.SEVERE,e.getLocalizedMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("/createHouseRequest")
     public ResponseEntity<House> createHouseRequest(@RequestBody House house) throws IOException {
         LOG.info("POST /createHouserequest" + house);
         house.setInterest(0);
         try {
-            House createdHouseRequest = houseDAO.createHouse(house);
+            House createdHouseRequest = houseDAO.createHouseApplication(house);
             if (createdHouseRequest == null) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
@@ -86,10 +110,10 @@ public class HouseController {
     }
 
     @PostMapping("/acceptedHouse")
-    public ResponseEntity<House> acceptHouse(@RequestBody House house) throws IOException {
+    public ResponseEntity<House> acceptHouse(@RequestBody House house, @RequestParam float interest) throws IOException {
         LOG.info("POST /acceptedHouse/" + house);
         try {
-            House createdHouseRequest = houseDAO.createHouse(house);
+            House createdHouseRequest = houseDAO.acceptApplication(house.getId(), interest);
             if (createdHouseRequest == null) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
@@ -105,7 +129,7 @@ public class HouseController {
         LOG.info("DELETE /declinedHouse/" + id);
 
         try {
-            boolean status = houseDAO.deleteHouse(id);
+            boolean status = houseDAO.deleteAppl(id);
             if (!status) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -147,4 +171,6 @@ public class HouseController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    // TODO search feature for houses, learn how to
 }
