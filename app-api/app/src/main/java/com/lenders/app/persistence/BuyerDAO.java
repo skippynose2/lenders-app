@@ -32,6 +32,18 @@ public interface BuyerDAO {
     int num_flips_complete) throws IOException;
 
     /**
+     * Create and save a new {@linkplain Buyer Buyer} to the system
+     * @param Buyer object containing all information for the new Buyer
+     * @return new {@linkplain Buyer Buyer} if successful
+     * @throws IOException if there is an issue with storage
+     */
+    Buyer createBuyer(Buyer Buyer) throws IOException;
+
+    Buyer[] getAllBuyers();
+
+    Buyer getBuyer(int id) throws IOException;
+
+    /**
      * Delete a {@linkplain Buyer Buyer} from the system with their id
      * @param id the id of the buyer to delete
      * @return true if buyer was deleted, false otherwise

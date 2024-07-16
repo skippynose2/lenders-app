@@ -22,11 +22,17 @@ public class HouseFileDAO implements HouseDAO{
 
     Map<Integer, House> houses; // local cache of all houses
 
+    Map<Integer, House> houseApplications; // local cache of all house applications (to be approved/declined)
+
     private ObjectMapper objectMapper;
 
-    private static int nextId; // help assign next id to new houses
+    private static int nextIdHouses; // help assign next id to new houses
 
-    private String filename; // json filename to read and write from
+    private static int nextIDApplications;
+
+    private String houseFilename; // json filename to read and write from
+
+    private String applFilename;
 
     /**
      * Constructor to instantiate the HouseFileDAO
@@ -34,8 +40,10 @@ public class HouseFileDAO implements HouseDAO{
      * @param objectMapper the object mapper between House objects and JSON
      * @throws IOException if an error occurs when instantiating the file
      */
-    public HouseFileDAO(@Value("${houses.file}") String filename, ObjectMapper objectMapper) throws IOException {
-        this.filename = filename;
+    public HouseFileDAO(@Value("${houses.file}") String houseFilename,
+    @Value("${houseApplications.file}") String applFilename, ObjectMapper objectMapper) throws IOException {
+        this.houseFilename = houseFilename;
+        this.applFilename = applFilename;
         this.objectMapper = objectMapper;
         load();
     }
@@ -45,8 +53,14 @@ public class HouseFileDAO implements HouseDAO{
      * @return the next id a new user can use
      */
     private synchronized static int getNextId() {
-        int id = nextId;
-        ++nextId;
+        int id = nextIdHouses;
+        ++nextIdHouses;
+        return id;
+    }
+
+    private synchronized static int getNextApplId() {
+        int id = nextIDApplications;
+        ++nextIDApplications;
         return id;
     }
 
@@ -57,21 +71,32 @@ public class HouseFileDAO implements HouseDAO{
      */
     private void load() throws IOException {
         houses = new TreeMap<>();
-        nextId = 0;
+        nextIdHouses = 0;
 
-        House[] houseArray = objectMapper.readValue(new File(filename), House[].class);
+        House[] houseArray = objectMapper.readValue(new File(houseFilename), House[].class);
+        House[] applArray = objectMapper.readValue(new File(applFilename), House[].class);
 
         for (House h: houseArray) {
             houses.put(h.getId(), h);
 
             // TODO is this necessary? test out later and see if its needed
             // TODO or some variation on it
-            if (h.getId() > nextId) {
-                nextId = h.getId();
+            if (h.getId() > nextIdHouses) {
+                nextIdHouses = h.getId();
             }
         }
 
-        nextId++;
+        nextIdHouses++;
+
+        for (House h: applArray) {
+            houseApplications.put(h.getId(), h);
+
+            if (h.getId() > nextIDApplications) {
+                nextIDApplications = h.getId();
+            }
+        }
+
+        nextIDApplications++;
     }
 
     /**
@@ -83,9 +108,26 @@ public class HouseFileDAO implements HouseDAO{
      */
     private boolean save() throws IOException {
         House[] houses = getHouses();
-        objectMapper.writeValue(new File(filename), houses);
+        House[] applications = getHouses();
+        objectMapper.writeValue(new File(houseFilename), houses);
+        objectMapper.writeValue(new File(applFilename), applications);
+        
         return true;
     }
+
+    private boolean saveHouses() throws IOException {
+        House[] houses = getHouses();
+        objectMapper.writeValue(new File(houseFilename), houses);
+        return true;
+    }
+
+    private boolean saveAppls() throws IOException {
+        House[] applications = getHouses();
+        objectMapper.writeValue(new File(applFilename), applications);
+        return true;
+    }
+
+
 
     /**
      * Create and save a new {@linkplain House house} to the system
@@ -103,7 +145,45 @@ public class HouseFileDAO implements HouseDAO{
                     h.getGross_rent_estimate(), h.getCondition(), h.getExit_strategy(),
                     h.getInterest());
             houses.put(newH.getId(), newH);
-            save();
+            saveHouses();
+            return newH;
+        }
+    }
+
+
+    public House createHouseApplication(House h) throws IOException {
+        synchronized (houseApplications) {
+            House newH = new House(getNextApplId(), h.getAddress(), h.getZipcode(),
+                    h.getCity(), h.getSqft(), h.isClosed_on(), h.getClosing_date(),
+                    h.getLoan_amount(), h.getLtv_percent(), h.getRehab_cost(),
+                    h.getRehab_loan(), h.getRehab_overview(), h.getTurn_around_date(),
+                    h.getGross_rent_estimate(), h.getCondition(), h.getExit_strategy(),
+                    0);
+            houseApplications.put(newH.getId(), newH);
+            saveAppls();
+            return newH;
+        }
+    }
+
+
+    public House acceptApplication(int applId, float interest) throws IOException {
+
+        House accHouse;
+
+        synchronized (houseApplications) {
+            accHouse = houseApplications.get(applId);
+            deleteAppl(applId);
+        }
+
+        synchronized (houses) {
+            House newH = new House(getNextId(), accHouse.getAddress(), accHouse.getZipcode(),
+            accHouse.getCity(), accHouse.getSqft(), accHouse.isClosed_on(), accHouse.getClosing_date(),
+            accHouse.getLoan_amount(), accHouse.getLtv_percent(), accHouse.getRehab_cost(),
+            accHouse.getRehab_loan(), accHouse.getRehab_overview(), accHouse.getTurn_around_date(),
+            accHouse.getGross_rent_estimate(), accHouse.getCondition(), accHouse.getExit_strategy(),
+            interest);
+            houses.put(newH.getId(), newH);
+            saveHouses();
             return newH;
         }
     }
@@ -125,6 +205,16 @@ public class HouseFileDAO implements HouseDAO{
         }
     }
 
+    public boolean deleteAppl(int id) throws IOException {
+        synchronized (houseApplications) {
+            if (houseApplications.containsKey(id)) {
+                houseApplications.remove(id);
+                return saveAppls();
+            }
+            return false;
+        }
+    }
+
     /**
      * Generate an array of all {@linkplain House houses} from the system
      * @return an array of all houses, can be empty if no houses exist
@@ -136,6 +226,14 @@ public class HouseFileDAO implements HouseDAO{
         House[] houseList = new House[houseArrayList.size()];
         houseArrayList.toArray(houseList);
         return houseList;
+    }
+
+    public House[] getApplHouses() {
+        ArrayList<House> applArrayList = new ArrayList<>(houseApplications.values());
+
+        House[] applList = new House[applArrayList.size()];
+        applArrayList.toArray(applList);
+        return applList;
     }
 
     /**

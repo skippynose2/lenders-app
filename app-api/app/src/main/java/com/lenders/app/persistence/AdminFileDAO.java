@@ -11,8 +11,12 @@ import org.springframework.beans.factory.annotation.Value;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lenders.app.model.Admin;
-import com.lenders.app.model.User;
 
+/**
+ * Implements the methods and functionality for JSON based Admin persistence
+ * 
+ * @author Matthew Morrison
+ */
 public class AdminFileDAO implements AdminDAO {
 
 
@@ -68,7 +72,7 @@ public class AdminFileDAO implements AdminDAO {
     /**
      * Saves the user map into the file as an array of JSON objects
      *
-     * @return true if the users were written successfully
+     * @return true if the admins were written successfully
      *
      * @throws IOException when file cannot be accessed or written to
      */
