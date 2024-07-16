@@ -10,7 +10,6 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Value;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lenders.app.model.Admin;
 import com.lenders.app.model.Buyer;
 
 /**
@@ -37,7 +36,7 @@ public class BuyerFileDAO implements BuyerDAO {
     }
 
         /**
-     * Generate a new id for a new admin when initially created
+     * Generate a new id for a new buyer when initially created
      * @return the next id a new user can use
      */
     private synchronized static int getNextId() {
@@ -118,10 +117,9 @@ public class BuyerFileDAO implements BuyerDAO {
     @Override
     public Buyer createBuyer(Buyer buyer) throws IOException {
         synchronized (buyers) {
-            int id = getNextId();
-            Buyer b = new Buyer(id, buyer.getPassword(), buyer.getFirstName(), buyer.getLast_name(), buyer.getSsn(), 
+            Buyer b = new Buyer(buyer.getId(), buyer.getPassword(), buyer.getFirstName(), buyer.getLast_name(), buyer.getSsn(), 
             buyer.getEmail(), buyer.getPhone_number(), buyer.getBusiness_name(), buyer.getNum_units(), buyer.getNum_deals_complete(), buyer.getNum_flips_complete());
-            buyers.put(id, b);
+            buyers.put(b.getId(), b);
             save();
             return b;
         }
@@ -200,7 +198,7 @@ public class BuyerFileDAO implements BuyerDAO {
      */
     @Override
     public Buyer[] getAllBuyers() {
-         ArrayList<Buyer> buyerArrayList = new ArrayList<>(buyers.values());
+        ArrayList<Buyer> buyerArrayList = new ArrayList<>(buyers.values());
 
         Buyer[] buyerList = new Buyer[buyerArrayList.size()];
         buyerArrayList.toArray(buyerList);

@@ -29,6 +29,14 @@ public interface LenderDAO {
     float funds_available) throws IOException;
 
     /**
+     * Create and save a new {@linkplain Lender Lender} to the system
+     * @param Lender object containing all information for the new Lender
+     * @return new {@linkplain Lender Lender} if successful
+     * @throws IOException if there is an issue with storage
+     */
+    Lender createLender(Lender lender) throws IOException;
+
+    /**
      * Delete a {@linkplain Lender Lender} from the system with their id
      * @param id the id of the lender to delete
      * @return true if lender was deleted, false otherwise
@@ -54,4 +62,18 @@ public interface LenderDAO {
      * @throws IOException if there is an issue with storage
      */
     Lender updateLenderInfo(int id, Lender newLenderInfo) throws IOException;
+
+    /**
+     * Get all {@linkplain Lender Lenders} from the system
+     * @return an array of all lenders, empty if none exist
+     */
+    Lender[] getAllLenders();
+
+    /**
+     * Get a single {@linkplain Lender Lender} with their id
+     * @param id the id of the lender to find
+     * @return the {@linkplain Lender Lender} with the respective id
+     * @throws IOException if there is an issue with storage
+     */
+    Lender getLender(int id) throws IOException;
 }
