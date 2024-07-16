@@ -15,33 +15,28 @@ public class Investment {
     private static final Logger LOG = Logger.getLogger(Investment.class.getName());
 
     static final String STRING_FORMAT = """
-            Investment: [id=%d, user_id=%d house=%s, money_invested=%.2f]
+            Investment: [id=%d, user_id=%d house_id=%d, date=%s, money_invested=%.2f]
             """;
 
     @JsonProperty("id") private int id;
     @JsonProperty("user_id") private int user_id;
+    @JsonProperty("house_id") private int house_id;
 
     @JsonProperty("date") private String date;
-    @JsonProperty("house") private House house;
     @JsonProperty("money_invested") private float money_invested;
 
-    /**
-     * Create a new Investment Entity with the required JSON Properties
-     * @param id the id of the investment
-     * @param house the house being invested in
-     * @param money_invested the amount of money invested in the house
-     */
+
     public Investment(@JsonProperty("id") int id,
                       @JsonProperty("user_id") int user_id,
+                      @JsonProperty("house_id") int house_id,
                       @JsonProperty("date") String date,
-                      @JsonProperty("house") House house,
                       @JsonProperty("money_invested") float money_invested) {
         this.id = id;
         this.user_id = user_id;
+        this.house_id = house_id;
         this.date = date;
-        this.house = house;
         this.money_invested = money_invested;
-    }
+    }   
 
     /**
      * Get the investment entity's id
@@ -60,6 +55,14 @@ public class Investment {
     }
 
     /**
+     * Get the house id associated with the investment
+     * @return the house id
+     */
+    public int getHouseId() {
+        return house_id;
+    }
+
+    /**
      * Get the date of the transaction
      * @return the date of the transaction
      */
@@ -67,13 +70,6 @@ public class Investment {
         return date;
     }
 
-    /**
-     * Get the investment's house
-     * @return the investment's house
-     */
-    public House getHouse() {
-        return house;
-    }
 
     /**
      * Get the money invested in the investment entity
@@ -92,19 +88,19 @@ public class Investment {
     }
 
     /**
+     * Set the house id of the investment
+     * @param house_id the house id of the investment
+     */
+    public void setHouseId(int house_id) {
+        this.house_id = house_id;
+    }
+
+    /**
      * Set the date the investment took place
      * @param date the date of the investment
      */
     public void setDate(String date) {
         this.date = date;
-    }
-
-    /**
-     * Set the house being invested to
-     * @param house the updated house to be invested in
-     */
-    public void setHouse(House house) {
-        this.house = house;
     }
 
     /**
