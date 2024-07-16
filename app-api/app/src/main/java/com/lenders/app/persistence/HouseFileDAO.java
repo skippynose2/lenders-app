@@ -32,11 +32,12 @@ public class HouseFileDAO implements HouseDAO{
 
     private String houseFilename; // json filename to read and write from
 
-    private String applFilename;
+    private String applFilename; // json filename for applications
 
     /**
      * Constructor to instantiate the HouseFileDAO
-     * @param filename the filename containing all house info
+     * @param houseFilename the filename containing all house info
+     * @param applFilename the filename containing all house application info
      * @param objectMapper the object mapper between House objects and JSON
      * @throws IOException if an error occurs when instantiating the file
      */
@@ -49,8 +50,8 @@ public class HouseFileDAO implements HouseDAO{
     }
 
     /**
-     * Generate a new id for a new user when initially created
-     * @return the next id a new user can use
+     * Generate a new id for a new house when initially created
+     * @return the next id a new house can use
      */
     private synchronized static int getNextId() {
         int id = nextIdHouses;
@@ -58,6 +59,10 @@ public class HouseFileDAO implements HouseDAO{
         return id;
     }
 
+    /**
+     * Generate a new id for a new house application when initially created
+     * @return the next id a new house application can use
+     */
     private synchronized static int getNextApplId() {
         int id = nextIDApplications;
         ++nextIDApplications;
@@ -65,7 +70,7 @@ public class HouseFileDAO implements HouseDAO{
     }
 
     /**
-     * Load all info on the house file
+     * Load all info on the house and house application file
      *
      * @throws IOException if an error occurs when reading the file
      */
@@ -100,7 +105,7 @@ public class HouseFileDAO implements HouseDAO{
     }
 
     /**
-     * Saves the house map into the file as an array of JSON objects
+     * Saves the house and house application maps into the file as an array of JSON objects
      *
      * @return true if the houses were written successfully
      *
@@ -115,12 +120,26 @@ public class HouseFileDAO implements HouseDAO{
         return true;
     }
 
+    /**
+     * Saves the house and maps into the file as an array of JSON objects
+     *
+     * @return true if the houses were written successfully
+     *
+     * @throws IOException when file cannot be accessed or written to
+     */
     private boolean saveHouses() throws IOException {
         House[] houses = getHouses();
         objectMapper.writeValue(new File(houseFilename), houses);
         return true;
     }
 
+    /**
+     * Saves the house application maps into the file as an array of JSON objects
+     *
+     * @return true if the houses were written successfully
+     *
+     * @throws IOException when file cannot be accessed or written to
+     */
     private boolean saveAppls() throws IOException {
         House[] applications = getHouses();
         objectMapper.writeValue(new File(applFilename), applications);
@@ -150,7 +169,13 @@ public class HouseFileDAO implements HouseDAO{
         }
     }
 
-
+    /**
+     * Create and save a new {@linkplain House house} application to the system
+     * @param house House object to be saved. A unique id will be assigned to it
+     * @return new {@linkplain House house} if successful
+     * @throws IOException if there is an issue with storage
+     */
+    @Override
     public House createHouseApplication(House h) throws IOException {
         synchronized (houseApplications) {
             House newH = new House(getNextApplId(), h.getAddress(), h.getZipcode(),
@@ -165,7 +190,14 @@ public class HouseFileDAO implements HouseDAO{
         }
     }
 
-
+    /**
+     * Accept a house application and apply a fixed interest to it
+     * @param applId the id of the house application
+     * @param interest the set interest of the house
+     * @return new {@linkplain House house} if successful
+     * @throws IOException if there is an issue with storage
+     */
+    @Override
     public House acceptApplication(int applId, float interest) throws IOException {
 
         House accHouse;
@@ -183,10 +215,11 @@ public class HouseFileDAO implements HouseDAO{
             accHouse.getGross_rent_estimate(), accHouse.getCondition(), accHouse.getExit_strategy(),
             interest);
             houses.put(newH.getId(), newH);
-            saveHouses();
+            save();
             return newH;
         }
     }
+
 
     /**
      * Delete a {@linkplain House house} from the system with its id
@@ -199,12 +232,19 @@ public class HouseFileDAO implements HouseDAO{
         synchronized (houses) {
             if (houses.containsKey(id)) {
                 houses.remove(id);
-                return save();
+                return saveHouses();
             }
             return false;
         }
     }
 
+    /**
+     * Delete a {@linkplain House house} application from the system with its id
+     * @param id the id of the house application to delete
+     * @return true if the house application was deleted, false otherwise
+     * @throws IOException if there is an issue with underlying storage
+     */
+    @Override
     public boolean deleteAppl(int id) throws IOException {
         synchronized (houseApplications) {
             if (houseApplications.containsKey(id)) {
@@ -228,6 +268,11 @@ public class HouseFileDAO implements HouseDAO{
         return houseList;
     }
 
+    /**
+     * Generate an array of all {@linkplain House house} applications from the system
+     * @return an array of all house applications, can be empty if none exist
+     */
+    @Override
     public House[] getApplHouses() {
         ArrayList<House> applArrayList = new ArrayList<>(houseApplications.values());
 
