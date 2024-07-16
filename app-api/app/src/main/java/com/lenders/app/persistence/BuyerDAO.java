@@ -39,8 +39,18 @@ public interface BuyerDAO {
      */
     Buyer createBuyer(Buyer Buyer) throws IOException;
 
+    /**
+     * Get all {@linkplain Buyer Buyers} from the system
+     * @return an array of all buyers, empty if none exist
+     */
     Buyer[] getAllBuyers();
 
+    /**
+     * Get a single {@linkplain Buyer Buyer} with their id
+     * @param id the id of the buyer to find
+     * @return the {@linkplain Buyer buyer} with the respective id
+     * @throws IOException if there is an issue with storage
+     */
     Buyer getBuyer(int id) throws IOException;
 
     /**

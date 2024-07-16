@@ -2,6 +2,7 @@ package com.lenders.app.persistence;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
@@ -99,8 +100,13 @@ public class BuyerFileDAO implements BuyerDAO {
     @Override
     public Buyer createBuyer(String password, String fn, String ln, String ssn, String email, String number,
             String business_name, int num_units, int num_deals_complete, int num_flips_complete) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createBuyer'");
+        synchronized (buyers) {
+            int id = getNextId();
+            Buyer newB = new Buyer(id, password, fn, ln, ssn, email, number, business_name, num_units, num_deals_complete, num_flips_complete);
+            buyers.put(id, newB);
+            save();
+            return newB;
+        }
     }
 
     /**
@@ -110,9 +116,15 @@ public class BuyerFileDAO implements BuyerDAO {
      * @throws IOException if there is an issue with storage
      */
     @Override
-    public Buyer createBuyer(Buyer Buyer) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createBuyer'");
+    public Buyer createBuyer(Buyer buyer) throws IOException {
+        synchronized (buyers) {
+            int id = getNextId();
+            Buyer b = new Buyer(id, buyer.getPassword(), buyer.getFirstName(), buyer.getLast_name(), buyer.getSsn(), 
+            buyer.getEmail(), buyer.getPhone_number(), buyer.getBusiness_name(), buyer.getNum_units(), buyer.getNum_deals_complete(), buyer.getNum_flips_complete());
+            buyers.put(id, b);
+            save();
+            return b;
+        }
     }
 
     /**
@@ -123,8 +135,13 @@ public class BuyerFileDAO implements BuyerDAO {
      */
     @Override
     public boolean deleteBuyer(int id) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteBuyer'");
+        synchronized (buyers) {
+            if (buyers.containsKey(id)) {
+                buyers.remove(id);
+                return save();
+            }
+            return false;
+        }
     }
 
     /**
@@ -137,8 +154,24 @@ public class BuyerFileDAO implements BuyerDAO {
      */
     @Override
     public Buyer updatePassword(int id, String oldPassword, String newPassword) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updatePassword'");
+        synchronized (buyers) {
+            if(!buyers.containsKey(id)) {
+                return null;
+            }
+
+            Buyer b = getBuyer(id);
+            String oldPass = b.getPassword();
+
+            // TODO find way to check if password is wrong vs admin does not exist
+            if (!oldPass.equals(oldPassword)) {
+                return null;
+            }
+
+            b.setPassword(newPassword);
+            buyers.put(id, b);
+            save();
+            return b;
+        }
     }
 
     /**
@@ -150,20 +183,41 @@ public class BuyerFileDAO implements BuyerDAO {
      */
     @Override
     public Buyer updateBuyerInfo(int id, Buyer newBuyerInfo) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateBuyerInfo'");
+        synchronized (buyers) {
+            if (!buyers.containsKey(id)) {
+                return null;
+            }
+
+            buyers.put(id, newBuyerInfo);
+            save();
+            return newBuyerInfo;
+        }
     }
 
+    /**
+     * Get all {@linkplain Buyer Buyers} from the system
+     * @return an array of all buyers, empty if none exist
+     */
     @Override
     public Buyer[] getAllBuyers() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllBuyers'");
+         ArrayList<Buyer> buyerArrayList = new ArrayList<>(buyers.values());
+
+        Buyer[] buyerList = new Buyer[buyerArrayList.size()];
+        buyerArrayList.toArray(buyerList);
+        return buyerList;
     }
 
+    /**
+     * Get a single {@linkplain Buyer Buyer} with their id
+     * @param id the id of the buyer to find
+     * @return the {@linkplain Buyer buyer} with the respective id
+     * @throws IOException if there is an issue with storage
+     */
     @Override
     public Buyer getBuyer(int id) throws IOException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getBuyer'");
+        synchronized (buyers) {
+            return buyers.getOrDefault(id, null);
+        }
     }
     
 }
