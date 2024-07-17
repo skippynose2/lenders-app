@@ -1,6 +1,7 @@
 package com.lenders.app.persistence;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import com.lenders.app.model.Investment;
 
@@ -43,21 +44,27 @@ public interface InvestmentDAO {
      * @param id the id of the investment
      * @return true if successful, false otherwise
      */
-    boolean removeInvestment(int id);
+    boolean removeInvestment(int id) throws IOException;
+
+    /**
+     * Get every investment object
+     * @return an array of all investments, can be empty if none
+     */
+    Investment[] getInvestments();
 
     /**
      * Get all the investments associated with a specific user
      * @param user_id the user id to search for
      * @return an array of all investments made by the user
      */
-    Investment[] getUserInvestments(int user_id);
+    ArrayList<Investment> getUserInvestments(int user_id);
 
     /**
      * Get all investments associated with a specific housing unit
      * @param house_id the house id to search for
      * @return an array of all investments with the house unit
      */
-    Investment[] getHouseInvestments(int house_id);
+    ArrayList<Investment> getHouseInvestments(int house_id);
 
     /**
      * Get a specific investment with its id
