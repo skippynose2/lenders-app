@@ -72,5 +72,6 @@ public interface AdminDAO {
      */
     Admin updatePhoneNum(int id, String newNumber) throws IOException;
 
+    Admin updateAdminInfo(int id, Admin updatedAdmin) throws IOException;
 
 }
