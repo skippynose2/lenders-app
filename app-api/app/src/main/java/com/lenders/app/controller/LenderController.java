@@ -16,28 +16,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lenders.app.model.Buyer;
-import com.lenders.app.persistence.BuyerDAO;
+import com.lenders.app.model.Lender;
+import com.lenders.app.persistence.LenderDAO;
 
 @RestController
-@RequestMapping("buyer")
-public class BuyerController {
-    private static final Logger LOG = Logger.getLogger(BuyerController.class.getName());
-    private BuyerDAO buyerDAO;
+@RequestMapping("lender")
+public class LenderController {
+    private static final Logger LOG = Logger.getLogger(LenderController.class.getName());
+    private LenderDAO lenderDAO;
 
-    public BuyerController(BuyerDAO buyerDAO) {
-        this.buyerDAO = buyerDAO;
+    public LenderController(LenderDAO lenderDAO) {
+        this.lenderDAO = lenderDAO;
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Buyer> createNewBuyer(@RequestBody Buyer buyer) throws IOException {
-        LOG.info("POST /create " + buyer);
+    public ResponseEntity<Lender> createNewLender(@RequestBody Lender lender) throws IOException {
+        LOG.info("Post /create " + lender);
         try {
-            Buyer newBuyer = buyerDAO.createBuyer(buyer);
-            if (newBuyer == null) {
+            Lender newLender = lenderDAO.createLender(lender);
+            if (newLender == null) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
-            return new ResponseEntity<>(newBuyer, HttpStatus.CREATED);
+            return new ResponseEntity<>(newLender, HttpStatus.CREATED);
         } catch (IOException e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -45,11 +45,10 @@ public class BuyerController {
     }
 
     @DeleteMapping("/delete")
-    public ResponseEntity<Buyer> deleteBuyer(@RequestParam int id) {
-        LOG.info("DELETE /delete");
-
+    public ResponseEntity<Lender> deleteLender(@RequestParam int id) {
+        LOG.info("DELETE /delete " + id);
         try {
-            boolean status = buyerDAO.deleteBuyer(id);
+            boolean status = lenderDAO.deleteLender(id);
             if (!status) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
@@ -60,42 +59,40 @@ public class BuyerController {
         }
     }
 
-    @GetMapping("/allBuyers")
-    public ResponseEntity<Buyer[]> getAllBuyers() throws IOException {
-        LOG.info("GET /allBuyers");
-        Buyer[] buyers = buyerDAO.getAllBuyers();
-        return new ResponseEntity<>(buyers, HttpStatus.OK);
+    @GetMapping("/allLenders")
+    public ResponseEntity<Lender[]> getAllLenders() throws IOException {
+        LOG.info("GET /allLenders");
+        Lender[] lenders = lenderDAO.getAllLenders();
+        return new ResponseEntity<>(lenders, HttpStatus.OK);
     }
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Buyer> getBuyer(@PathVariable int id) {
-        LOG.info("GET /get/" +id);
+    public ResponseEntity<Lender> getLender(@PathVariable int id) {
+        LOG.info("GET /get/" + id);
         try {
-            Buyer b = buyerDAO.getBuyer(id);
-            if (b != null) {
-                return new ResponseEntity<>(b, HttpStatus.FOUND);
-            }
-            else {
+            Lender l = lenderDAO.getLender(id);
+            if (l == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
+            return new ResponseEntity<>(l, HttpStatus.FOUND);
         } catch (IOException e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PutMapping("/update/password/{id}")
-    public ResponseEntity<Buyer> updatePassword(@PathVariable int id, @RequestParam String oldPass, @RequestParam String newPass) throws IOException {
+    @PutMapping("/updatePassword/{id}")
+    public ResponseEntity<Lender> updatePassword(@PathVariable int id, @RequestParam String oldPass, @RequestParam String newPass) throws IOException {
         LOG.info("PUT /update/password/" + id);
 
         try {
-            Buyer updatedB = buyerDAO.updatePassword(id, oldPass, newPass);
+            Lender updatedL = lenderDAO.updatePassword(id, oldPass, newPass);
 
-            if (updatedB == null) {
+            if (updatedL == null) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
 
-            return new ResponseEntity<>(updatedB, HttpStatus.OK);
+            return new ResponseEntity<>(updatedL, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -103,18 +100,18 @@ public class BuyerController {
     }
 
     @PutMapping("/updateInfo")
-    public ResponseEntity<Buyer> updateBuyerInfo (@RequestBody Buyer updatedB) throws IOException {
-        LOG.info("PUT /updateInfo " + updatedB);
+    public ResponseEntity<Lender> updateBuyerInfo (@RequestBody Lender updatedL) throws IOException {
+        LOG.info("PUT /updateInfo " + updatedL);
 
         try {
-            int id = updatedB.getId();
+            int id = updatedL.getId();
 
-            Buyer b = buyerDAO.updateBuyerInfo(id, updatedB);
+            Lender l = lenderDAO.updateLenderInfo(id, updatedL);
 
-            if (b == null) {
+            if (l == null) {
                 return new ResponseEntity<>(HttpStatus.CONFLICT);
             }
-            return new ResponseEntity<>(b, HttpStatus.OK);
+            return new ResponseEntity<>(l, HttpStatus.OK);
         } catch (IOException e) {
             LOG.log(Level.SEVERE,e.getLocalizedMessage());
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
