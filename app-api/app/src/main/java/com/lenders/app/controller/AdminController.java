@@ -90,7 +90,7 @@ public class AdminController {
         try {
             Admin a = adminDAO.getAdmin(id);
             if (a != null) {
-                return new ResponseEntity<>(a, HttpStatus.OK);
+                return new ResponseEntity<>(a, HttpStatus.FOUND);
             }
             else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -157,7 +157,7 @@ public class AdminController {
 
     @PutMapping("/update/info")
     public ResponseEntity<Admin> updateAdminInfo (@RequestBody Admin admin) throws IOException {
-        LOG.info("PUT /update/info/" + admin);
+        LOG.info("PUT /update/info " + admin);
 
         try {
             int id = admin.getId();

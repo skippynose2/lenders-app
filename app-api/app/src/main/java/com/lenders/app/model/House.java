@@ -261,7 +261,7 @@ public class House {
     public String toString() {
         return String.format(STRING_FORMAT, id, address, zipcode, city, sqft,
         closed_on, closing_date, loan_amount, ltv_percent, rehab_cost, rehab_loan,
-        rehab_overview, turn_around_date, gross_rent_estimate, condition, exit_strategy);
+        rehab_overview, turn_around_date, gross_rent_estimate, condition, exit_strategy, unitType, interest);
     }
 
 }
