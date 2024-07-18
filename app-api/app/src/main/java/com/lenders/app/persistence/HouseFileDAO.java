@@ -162,7 +162,7 @@ public class HouseFileDAO implements HouseDAO{
                     h.getLoan_amount(), h.getLtv_percent(), h.getRehab_cost(),
                     h.getRehab_loan(), h.getRehab_overview(), h.getTurn_around_date(),
                     h.getGross_rent_estimate(), h.getCondition(), h.getExit_strategy(),
-                    h.getInterest());
+                    h.getUnitType(), h.getInterest());
             houses.put(newH.getId(), newH);
             saveHouses();
             return newH;
@@ -183,7 +183,7 @@ public class HouseFileDAO implements HouseDAO{
                     h.getLoan_amount(), h.getLtv_percent(), h.getRehab_cost(),
                     h.getRehab_loan(), h.getRehab_overview(), h.getTurn_around_date(),
                     h.getGross_rent_estimate(), h.getCondition(), h.getExit_strategy(),
-                    0);
+                    h.getUnitType(), 0);
             houseApplications.put(newH.getId(), newH);
             saveAppls();
             return newH;
@@ -213,7 +213,7 @@ public class HouseFileDAO implements HouseDAO{
             accHouse.getLoan_amount(), accHouse.getLtv_percent(), accHouse.getRehab_cost(),
             accHouse.getRehab_loan(), accHouse.getRehab_overview(), accHouse.getTurn_around_date(),
             accHouse.getGross_rent_estimate(), accHouse.getCondition(), accHouse.getExit_strategy(),
-            interest);
+            accHouse.getUnitType(), interest);
             houses.put(newH.getId(), newH);
             save();
             return newH;
