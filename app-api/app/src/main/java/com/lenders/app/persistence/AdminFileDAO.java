@@ -223,5 +223,18 @@ public class AdminFileDAO implements AdminDAO {
             return a;
         }
     }
+
+    @Override
+    public Admin updateAdminInfo(int id, Admin updatedAdmin) throws IOException {
+        synchronized (admins) {
+            if(!admins.containsKey(id)) {
+                return null;
+            }
+
+            admins.put(id, updatedAdmin);
+            save();
+            return updatedAdmin;
+        }
+    }
     
 }

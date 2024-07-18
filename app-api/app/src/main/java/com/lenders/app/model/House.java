@@ -18,7 +18,7 @@ public class House {
         House: [id=%d, address=%s, zipcode=%d, city=%s, sqft=%d,
         closed_on=%b, closing_date=%s, loan_amount=%.2f, ltv_percent=%.2f,
         rehab_cost=%.2f, rehab_loan=%.2f, rehab_overview=%s, turn_around_date=%s,
-        gross_rent_estimate=%.2f, condition=%s, exit_strategy=%s, interest=%.2f]
+        gross_rent_estimate=%.2f, condition=%s, exit_strategy=%s, type=%s, interest=%.2f]
         """;
 
     public enum ExitStrategy {
@@ -30,6 +30,11 @@ public class House {
         POOR,
         FAIR,
         GOOD
+    }
+
+    public enum Type {
+        SINGLE_RESIDENTIAL,
+        LARGE_SCALE_RESIDENTIAL
     }
 
     @JsonProperty("id") private int id;
@@ -48,6 +53,7 @@ public class House {
     @JsonProperty("gross_rent_estimate") private float gross_rent_estimate;
     @JsonProperty("condition") private Condition condition;
     @JsonProperty("exit_strategy") private ExitStrategy exit_strategy;
+    @JsonProperty("unitType") private Type unitType;
     @JsonProperty("interest") private float interest;
 
     /**
@@ -69,7 +75,8 @@ public class House {
      * @param condition condition of house
      * @param exit_strategy exit strategy of the hosue
      */
-    public House(@JsonProperty("id") int id,
+    public House(
+                 @JsonProperty("id") int id,
                  @JsonProperty("address") String address,
                  @JsonProperty("zipcode") int zipcode,
                  @JsonProperty("city") String city,
@@ -85,7 +92,9 @@ public class House {
                  @JsonProperty("gross_rent_estimate") float gross_rent_estimate,
                  @JsonProperty("condition") Condition condition,
                  @JsonProperty("exit_strategy") ExitStrategy exit_strategy,
+                 @JsonProperty("unitType") Type unitType,
                  @JsonProperty("interest") float interest) {
+        this.unitType = unitType;
         this.id = id;
         this.address = address;
         this.zipcode = zipcode;
@@ -106,6 +115,10 @@ public class House {
     }
 
     //Getters
+
+    public Type getUnitType() {
+        return this.unitType;
+    }
 
     public int getId() {
         return this.id;
@@ -176,6 +189,7 @@ public class House {
     }
 
     // Setters
+
     public void setAddress(String address) {
         this.address = address;
     }
@@ -247,7 +261,7 @@ public class House {
     public String toString() {
         return String.format(STRING_FORMAT, id, address, zipcode, city, sqft,
         closed_on, closing_date, loan_amount, ltv_percent, rehab_cost, rehab_loan,
-        rehab_overview, turn_around_date, gross_rent_estimate, condition, exit_strategy);
+        rehab_overview, turn_around_date, gross_rent_estimate, condition, exit_strategy, unitType, interest);
     }
 
 }
